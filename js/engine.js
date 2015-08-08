@@ -73,7 +73,15 @@ function gameSpawner()
 	console.log(currentSpawns);		//DEBUG	
 }
 
-
+function animateGestures(){
+	y = 300;
+	for (i=0; i<currentSpawns.length; i++){
+		var shape = game.add.sprite(200,y,currentSpawns[i]);
+		shape.animations.add('twinkle',null,25,true);
+		shape.play('twinkle');
+		y += 60;
+	}
+}
 
 function searchAndRemove(input, arr)	{
 	for(i = 0; i< arr.length; i++)	{
