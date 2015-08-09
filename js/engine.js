@@ -7,7 +7,7 @@ var allShape = ["triangle", "x","rectangle","circle",
 				"lcb","rcb","star","pigtail" 
 				];
 var spawn;
-var shape;
+var shape = [];
 var currentSpawns =[];
 
 function preload() {
@@ -76,20 +76,23 @@ function gameSpawner()
 function animateGestures(){
 	y = 300;
 	for (i=0; i<currentSpawns.length; i++){
-		var shape = game.add.sprite(200,y,currentSpawns[i]);
-		shape.animations.add('twinkle',null,25,true);
-		shape.play('twinkle');
+		shape[i] = game.add.sprite(200,y,currentSpawns[i]);
+		shape[i].animations.add('twinkle',null,25,true);
+		shape[i].play('twinkle');
 		y += 60;
+		console.log("[i] = " + i)
 	}
 }
 
 function searchAndRemove(input, arr)	{
 	for(i = 0; i< arr.length; i++)	{
-		if(arr[i] === input)	{
+		if(arr[i] == input)	{
+			
+			shape[i].destroy();
 			arr.splice(i, 1);
 			score += 1;
 			scoreText.text = score;
-				
+			
 			console.log(currentSpawns);		//DEBUG			
 			break;
 		}
