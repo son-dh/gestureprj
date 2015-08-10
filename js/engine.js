@@ -7,7 +7,7 @@ var allShape = ["triangle", "x","rectangle","circle",
 				"lcb","rcb","star","pigtail" 
 				];
 var spawn;
-var shape = [];
+
 var currentSpawns =[];
 
 function preload() {
@@ -66,8 +66,9 @@ function gameSpawner()
 	}
 	for (i = 0; i < numberOfShapes; i++)
 	{
-		currentShape = allShape[Math.floor(Math.random() * allShape.length)]; 
-		currentSpawns.push(currentShape)
+		
+		_getRnd = allShape[Math.floor(Math.random() * allShape.length)]; 
+		currentSpawns.push({ currentShape: _getRnd, shape: null});
 	}	
 	animateGestures();
 	console.log(currentSpawns);		//DEBUG	
@@ -76,24 +77,22 @@ function gameSpawner()
 function animateGestures(){
 	y = 300;
 	for (i=0; i<currentSpawns.length; i++){
-		shape[i] = game.add.sprite(200,y,currentSpawns[i]);
-		shape[i].animations.add('twinkle',null,25,true);
-		shape[i].play('twinkle');
-		y += 60;
-		console.log("[i] = " + i)
+		var shape = game.add.sprite(200,y,currentSpawns[i].currentShape);
+		shape.animations.add('twinkle',null,25,true);
+		shape.play('twinkle');
+		currentSpawns[i].shape = shape; 
+		y += 60;		
 	}
 }
 
 function searchAndRemove(input, arr)	{
 	for(i = 0; i< arr.length; i++)	{
-		if(arr[i] == input)	{
-			
-			shape[i].destroy();
+		if(arr[i].currentShape === input)	{			
+			arr[i].shape.destroy();
 			arr.splice(i, 1);
 			score += 1;
-			scoreText.text = score;
-			
-			console.log(currentSpawns);		//DEBUG			
+			scoreText.text = score;			
+				
 			break;
 		}
 	}
